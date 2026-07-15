@@ -87,9 +87,21 @@
             <h2 id="guides-title">先做判断，再记名字</h2>
           </div>
           <div class="guide-grid">
-            <article class="guide-card"><div class="guide-index">01</div><div><h3>AppKit 与 SwiftUI</h3><p>同一个 Mac 元素往往有两个准确名称：写提示词时到底该使用哪一个？</p></div><span>↗</span></article>
-            <article class="guide-card"><div class="guide-index">02</div><div><h3>Swift 与 Electron</h3><p>原生应用，还是套着桌面外壳的网页？第一处分岔决定后续所有词汇。</p></div><span>↗</span></article>
-            <article class="guide-card"><div class="guide-index">03</div><div><h3>术语翻译表</h3><p>60+ 个元素：通俗叫法 → Web → AppKit → SwiftUI，支持快速检索。</p></div><span>↗</span></article>
+            <article class="guide-card">
+              <div class="guide-index">01</div>
+              <div><h3>AppKit 与 SwiftUI</h3><p>同一个 Mac 元素往往有两个准确名称：写提示词时到底该使用哪一个？</p></div>
+              <span>↗</span>
+            </article>
+            <article class="guide-card">
+              <div class="guide-index">02</div>
+              <div><h3>Swift 与 Electron</h3><p>原生应用，还是套着桌面外壳的网页？第一处分岔决定后续所有词汇。</p></div>
+              <span>↗</span>
+            </article>
+            <article class="guide-card">
+              <div class="guide-index">03</div>
+              <div><h3>术语翻译表</h3><p>60+ 个元素：通俗叫法 → Web → AppKit → SwiftUI，支持快速检索。</p></div>
+              <span>↗</span>
+            </article>
           </div>
         </section>
       </main>
@@ -103,8 +115,15 @@
     <div class="search-dialog" id="search-dialog" role="dialog" aria-modal="true" aria-labelledby="search-title" hidden>
       <button class="dialog-backdrop" data-close-search aria-label="关闭搜索"></button>
       <section class="command-panel">
-        <div class="command-input-row"><span class="search-icon" aria-hidden="true"></span><input id="command-input" type="search" autocomplete="off" placeholder="描述你想到的界面元素" aria-labelledby="search-title" /><kbd>ESC</kbd></div>
-        <div class="command-meta"><span id="search-title">搜索 UI 术语</span><span>支持中文描述、英文名称与代码关键词</span></div>
+        <div class="command-input-row">
+          <span class="search-icon" aria-hidden="true"></span>
+          <input id="command-input" type="search" autocomplete="off" placeholder="描述你想到的界面元素" aria-labelledby="search-title" />
+          <kbd>ESC</kbd>
+        </div>
+        <div class="command-meta">
+          <span id="search-title">搜索 UI 术语</span>
+          <span>支持中文描述、英文名称与代码关键词</span>
+        </div>
         <div class="command-results" id="command-results"></div>
         <div class="command-footer"><span><kbd>↑</kbd><kbd>↓</kbd> 移动</span><span><kbd>↵</kbd> 查看</span><span><kbd>ESC</kbd> 关闭</span></div>
       </section>
@@ -128,6 +147,7 @@
 
     <div class="definition-popover" id="definition-popover" hidden></div>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="./data.js"></script>
     <script src="./app.js"></script>
   </body>
 </html>
