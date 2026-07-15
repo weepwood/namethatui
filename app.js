@@ -1,6 +1,23 @@
-const terms=window.UI_TERMS;
+const terms=window.UI_TERMS||[];
 const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
 const lights='<div class="lights"><i></i><i></i><i></i></div>',lines='<div class="lines"><i></i><i></i><i></i></div>';
+const aliases={
+ 'vibrancy':'菜单栏图标后面的浅色背景 毛玻璃 半透明背景 侧栏透明材质 wallpaper bleed frosted material',
+ 'scrim':'弹窗后面半透明的黑色层 弹窗后面半透明黑色层 弹窗后面的遮罩 背景变暗 蒙层 backdrop overlay',
+ 'form-field':'输入后消失的灰色文字 输入框里的灰字 占位文字 placeholder hint text',
+ 'volume-slider':'拖动来改变音量的圆点 拖动来调节音量的圆点 音量轨道上的圆点 滑块旋钮 knob thumb',
+ 'truncation':'文字被三个点截断 文字太长显示三个点 文本末尾省略号 ellipsis line clamp',
+ 'popover-dropdown-tooltip':'按钮旁边出现的小浮层 悬停提示 下拉浮层 anchored overlay',
+ 'toast':'操作成功后短暂出现的消息 保存成功提示 自动消失消息 snackbar',
+ 'command-palette':'按快捷键打开搜索命令 搜索所有操作 快速启动器 launcher',
+ 'hamburger-menu':'三条横线菜单 移动端侧边导航 nav drawer',
+ 'focus-visible':'键盘选中控件的外框 tab键焦点 focus outline',
+ 'sticky-fixed':'滚动时固定在顶部 吸顶 固定悬浮',
+ 'empty-state':'没有数据时的提示 空页面 无内容引导',
+ 'lightbox':'点击图片放大 背景变暗 图片预览层',
+ 'masonry':'高低不一的卡片紧密排列 pinterest 瀑布流',
+ 'bento-grid':'大小不同的方块网格 便当盒布局 dashboard tiles'
+};
 function demo(type){
  const M={
   scramble:'<div class="demo scramble">NAMΞ <b>#@UI</b></div>',spring:'<div class="demo spring"><i></i></div>',easing:'<div class="demo spring"><i></i></div>',
@@ -18,8 +35,8 @@ function demo(type){
   popovers:'<div class="demo form" style="text-align:center;padding-top:60px"><div class="menu-drop" style="left:45px;top:8px">筛选项目<br><br>☑ 仅显示活跃</div><button class="demo-button">筛选</button> <button class="demo-button">操作⌄</button></div>',
   scrim:`<div class="demo overlay">${lines}<div class="scrim"><div class="modal">背后的半透明层就是遮罩。</div></div></div>`,
   skeleton:'<div class="demo" style="display:grid;grid-template-columns:45px 1fr;gap:12px"><i style="width:45px;height:45px;border-radius:50%;background:#d2d1cd"></i><div class="lines">'+ '<i></i><i></i><i></i>' +'</div></div>',
-  combobox:'<div class="demo form"><div class="input">苹果</div><div style="border:1px solid #aaa;margin-top:4px;padding:8px;font-size:8px;line-height:2;background:#fff">苹果<br>杏<br>牛油果</div></div>',
-  command:'<div class="demo command-demo"><div class="cmd-search">⌕　输入命令或搜索…</div><div class="cmd-row active">创建新项目 <kbd>⌘N</kbd></div><div class="cmd-row">邀请成员 <kbd>⌘I</kbd></div><div class="cmd-row">打开设置 <kbd>⌘,</kbd></div></div>',
+  combobox:'<div class="demo form"><span class="label">喜欢的水果</span><div class="input">苹果</div><div class="menu-drop" style="left:9px;right:9px;top:50px">苹果<br>杏子<br>牛油果</div></div>',
+  command:'<div class="demo command"><div class="input">⌕　命令…</div><div class="command-row active">创建新项目 <span>⌘ N</span></div><div class="command-row">邀请成员 <span>⌘ I</span></div><div class="command-row">打开设置 <span>⌘ ,</span></div></div>',
   accordion:'<div class="demo accordion"><div class="acc">什么是组件？ <b>−</b></div><div class="acc-copy">拥有自身结构和行为、可以重复使用的一块界面。</div><div class="acc">什么是设计令牌？ <b>＋</b></div></div>',
   tabs:'<div class="demo tabs"><div class="tabbar"><i>概览</i><i>洞察</i><i>活动</i></div><div class="tabcopy"><b>1,248</b><div class="helper">较上周 +12%</div></div></div>',
   badges:'<div class="demo chips"><span class="badge">7</span><span class="chip">设计系统 ×</span><span class="pill">活跃</span><span class="tag">Web</span></div>',
@@ -43,21 +60,32 @@ function demo(type){
   inspector:`<div class="demo inspector"><div class="pane">${lines}</div><aside><b>样式</b><div class="property">填充 <span>白色</span></div><div class="property">边框 <span>1px</span></div><div class="property">阴影 <span>开</span></div></aside></div>`,
   panel:'<div class="demo menubar-demo"><div class="modal" style="position:absolute;left:45px;top:25px;background:rgba(30,32,36,.85);color:#fff">编辑器颜色<br><br>亮度 ━━━●</div></div>',macpopover:'<div class="demo form" style="text-align:center;padding-top:65px"><div class="menu-drop" style="left:65px;top:10px">正在播放<br><b>Ambient Study</b></div><button class="demo-button">显示气泡框</button></div>',
   popup:'<div class="demo form"><div class="input">中号 ✓ <span style="margin-left:auto">⌄</span></div><br><div class="input">添加新文件… <span style="margin-left:auto">⌄</span></div></div>',segments:'<div class="demo chips"><span class="tag">日</span><span class="pill">周</span><span class="tag">月</span><span class="tag">年</span></div>',
-  sheet:'<div class="demo demo-window"><div class="titlebar">'+lights+'</div><div class="pane"><div class="form"><b>删除“Q3 报告”？</b><p class="helper">只会阻止当前窗口。</p></div></div></div>',sidebar:'<div class="demo split"><div class="side" style="font-size:8px;line-height:2.4">收藏<br>最近使用<br><b>桌面</b><br>文稿<br>下载</div><div class="content">'+lines+'</div></div>',
-  stepper:'<div class="demo chips">份数：<span class="tag">2　▲<br>　　▼</span></div>',toolbar:'<div class="demo demo-window"><div class="titlebar">'+lights+'<b style="margin:auto">未命名</b><button>＋</button></div><div class="pane">'+lines+'</div></div>',traffic:'<div class="demo demo-window"><div class="titlebar">'+lights+'</div><div class="pane"></div></div>',
+  sheet:`<div class="demo demo-window"><div class="titlebar">${lights}</div><div class="pane"><div class="form"><b>删除“Q3 报告”？</b><p class="helper">只会阻止当前窗口。</p></div></div></div>`,sidebar:`<div class="demo split"><div class="side" style="font-size:8px;line-height:2.4">收藏<br>最近使用<br><b>桌面</b><br>文稿<br>下载</div><div class="content">${lines}</div></div>`,
+  stepper:'<div class="demo chips">份数：<span class="tag">2　▲<br>　　▼</span></div>',toolbar:`<div class="demo demo-window"><div class="titlebar">${lights}<b style="margin:auto">未命名</b><button>＋</button></div><div class="pane">${lines}</div></div>`,traffic:`<div class="demo demo-window"><div class="titlebar">${lights}</div><div class="pane"></div></div>`,
   vibrancy:'<div class="demo vibrancy"><aside><i>资料库</i><i>收藏</i><i>项目</i></aside></div>','menu-extra':'<div class="demo menubar-demo"><div class="menu-top" style="justify-content:flex-end">◉　<b>◈</b>　⌁　9:41</div><div class="menu-drop" style="left:auto;right:8px">名称查询<br><br>搜索界面术语…<br>打开偏好设置</div></div>'
  };
  return M[type]||M.window
 }
 const grid=$('#card-grid'),count=$('#result-count'),empty=$('#empty-results'),search=$('#search-dialog'),input=$('#command-input'),results=$('#command-results'),detail=$('#detail-dialog'),toast=$('#toast'),definition=$('#definition-popover');
-let platform='all',sort='newest',query='',selection=0,shown=[],current;
+let platform='all',sort='newest',selection=0,shown=[],current;
 const esc=s=>{const d=document.createElement('div');d.textContent=s;return d.innerHTML};
-function filtered(){let q=query.trim().toLowerCase(),a=terms.filter(t=>(platform==='all'||t.p===platform)&&(!q||`${t.zh} ${t.en} ${t.code} ${t.desc} ${t.def}`.toLowerCase().includes(q)));return a.sort((x,y)=>sort==='popular'?y.pop-x.pop:x.index-y.index)}
+const normalize=s=>String(s||'').toLowerCase().replace(/[\s“”"'，。！？、·：:（）()\-_/]+/g,'');
+function match(t,q){
+ const raw=String(q||'').trim().toLowerCase();
+ if(!raw)return true;
+ const hay=`${t.zh} ${t.en} ${t.code} ${t.desc} ${t.def} ${aliases[t.slug]||''}`.toLowerCase();
+ if(hay.includes(raw))return true;
+ const nq=normalize(raw),nh=normalize(hay);
+ if(nh.includes(nq))return true;
+ const tokens=raw.split(/[\s，。！？、]+/).filter(x=>x.length>1);
+ return tokens.length>1&&tokens.every(token=>hay.includes(token));
+}
+function filtered(q=''){let a=terms.filter(t=>(platform==='all'||t.p===platform)&&match(t,q));return a.sort((x,y)=>sort==='popular'?y.pop-x.pop:x.index-y.index)}
 function render(){let a=filtered();count.textContent=a.length;grid.hidden=!a.length;empty.hidden=!!a.length;grid.innerHTML=a.map(t=>`<article class="ui-card" data-slug="${t.slug}" tabindex="0"><div class="card-demo ${t.tall?'tall':''} ${t.short?'short':''}">${demo(t.demo)}</div><div class="card-body"><div class="card-meta"><span class="card-platform">${t.p}</span>${t.new?'<span class="card-new">new</span>':''}</div><h3 class="card-title">${t.zh}</h3><span class="card-english">${t.en}</span><span class="card-code">${esc(t.code)}</span><p class="card-description">${t.desc}</p></div></article>`).join('')}
-function openSearch(v=''){search.hidden=false;document.body.classList.add('dialog-open');input.value=v;query=v;selection=0;renderResults();setTimeout(()=>input.focus())}
-function closeSearch(){search.hidden=true;document.body.classList.remove('dialog-open');query='';input.value='';render()}
-function renderResults(){query=input.value;shown=filtered().slice(0,9);selection=Math.min(selection,Math.max(0,shown.length-1));results.innerHTML=shown.length?shown.map((t,i)=>`<button class="command-item ${i===selection?'is-selected':''}" data-command-slug="${t.slug}"><span class="command-preview">${t.p==='web'?'W':'⌘'}</span><span><strong>${t.zh}</strong><small>${t.en} · ${t.desc}</small></span><span>${esc(t.code)}</span></button>`).join(''):'<div class="command-empty">没有匹配结果，试试描述它的行为。</div>'}
-function openDetail(t){if(!t)return;current=t;$('#detail-demo').innerHTML=demo(t.demo);$('#detail-badges').innerHTML=`<span>${t.p}</span><span>${esc(t.code)}</span>`;$('#detail-title').textContent=t.zh;$('#detail-english').textContent=t.en;$('#detail-description').textContent=t.desc;$('#detail-definition').textContent=t.def;$('#detail-prompt').textContent=`实现一个“${t.zh}（${t.en}）”。${t.desc} 请覆盖默认、悬停、键盘焦点、激活、禁用状态，并保证响应式布局和可访问性语义正确。优先使用 ${t.code}。`;search.hidden=true;detail.hidden=false;document.body.classList.add('dialog-open')}
+function openSearch(v=''){search.hidden=false;document.body.classList.add('dialog-open');input.value=v;selection=0;renderResults();setTimeout(()=>input.focus())}
+function closeSearch(){search.hidden=true;input.value='';shown=[];document.body.classList.remove('dialog-open')}
+function renderResults(){shown=filtered(input.value).slice(0,9);selection=Math.min(selection,Math.max(0,shown.length-1));results.innerHTML=shown.length?shown.map((t,i)=>`<button class="command-item ${i===selection?'is-selected':''}" data-command-slug="${t.slug}"><span class="command-preview">${t.p==='web'?'W':'⌘'}</span><span><strong>${t.zh}</strong><small>${t.en} · ${t.desc}</small></span><span>${esc(t.code)}</span></button>`).join(''):'<div class="command-empty">没有匹配结果，试试描述它的行为。</div>'}
+function openDetail(t){if(!t)return;current=t;$('#detail-demo').innerHTML=demo(t.demo);$('#detail-badges').innerHTML=`<span>${t.p}</span><span>${esc(t.code)}</span>`;$('#detail-title').textContent=t.zh;$('#detail-english').textContent=t.en;$('#detail-description').textContent=t.desc;$('#detail-definition').textContent=t.def;$('#detail-prompt').textContent=`实现一个“${t.zh}（${t.en}）”。${t.desc} 请覆盖默认、悬停、键盘焦点、激活、禁用状态，并保证响应式布局和可访问性语义正确。优先使用 ${t.code}。`;search.hidden=true;input.value='';shown=[];detail.hidden=false;document.body.classList.add('dialog-open')}
 function closeDetail(){detail.hidden=true;document.body.classList.remove('dialog-open');current=null}
 function tip(m){toast.textContent=m;toast.classList.add('is-visible');clearTimeout(tip.t);tip.t=setTimeout(()=>toast.classList.remove('is-visible'),1800)}
 document.addEventListener('click',e=>{let n;if(n=e.target.closest('.ui-card'))return openDetail(terms.find(t=>t.slug===n.dataset.slug));if(n=e.target.closest('[data-command-slug]'))return openDetail(terms.find(t=>t.slug===n.dataset.commandSlug));if(n=e.target.closest('[data-platform]')){platform=n.dataset.platform;$$('[data-platform]').forEach(b=>b.classList.toggle('is-active',b===n));return render()}if(n=e.target.closest('[data-sort]')){sort=n.dataset.sort;$$('[data-sort]').forEach(b=>b.classList.toggle('is-active',b===n));return render()}if(e.target.closest('[data-open-search]'))return openSearch();if(e.target.closest('[data-close-search]'))return closeSearch();if(e.target.closest('[data-close-detail]'))return closeDetail();if(n=e.target.closest('[data-query]'))return openSearch(n.dataset.query)});
