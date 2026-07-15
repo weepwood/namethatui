@@ -1,0 +1,14 @@
+{
+  "name": "namethatui-cn",
+  "version": "1.0.0",
+  "private": true,
+  "description": "NameThatUI 中文视觉词典复刻版",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "devDependencies": {
+    "vite": "^7.0.0"
+  }
+}
